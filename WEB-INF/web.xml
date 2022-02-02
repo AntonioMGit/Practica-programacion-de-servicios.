@@ -1,0 +1,64 @@
+<web-app>
+   <servlet>
+     <servlet-name>hora</servlet-name>      
+     <servlet-class>ejemplo.Hora</servlet-class>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>hora</servlet-name>
+      <url-pattern>/hora</url-pattern>
+   </servlet-mapping>
+
+   <servlet>
+     <servlet-name>DB</servlet-name>      
+     <servlet-class>ejemplo.DB</servlet-class>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>DB</servlet-name>
+      <url-pattern>/DB</url-pattern>
+   </servlet-mapping>
+
+   <servlet>
+     <servlet-name>Instalador</servlet-name>      
+     <servlet-class>ejemplo.Instalador</servlet-class>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>Instalador</servlet-name>
+      <url-pattern>/instalador</url-pattern>
+   </servlet-mapping>
+
+   <servlet>
+     <servlet-name>InicioSesion</servlet-name>      
+     <servlet-class>ejemplo.InicioSesion</servlet-class>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>InicioSesion</servlet-name>
+      <url-pattern>/iniciosesion</url-pattern>
+   </servlet-mapping>
+
+   <servlet>
+     <servlet-name>Panel</servlet-name>      
+     <servlet-class>ejemplo.Panel</servlet-class>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>Panel</servlet-name>
+      <url-pattern>/panel</url-pattern>
+   </servlet-mapping>
+
+   <servlet>
+     <servlet-name>Blog</servlet-name>      
+     <servlet-class>ejemplo.Blog</servlet-class>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>Blog</servlet-name>
+      <url-pattern>/blog</url-pattern>
+   </servlet-mapping>
+
+   <servlet>
+     <servlet-name>Editor</servlet-name>      
+     <servlet-class>ejemplo.Editor</servlet-class>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>Editor</servlet-name>
+      <url-pattern>/editor</url-pattern>
+   </servlet-mapping>
+</web-app>
