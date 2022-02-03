@@ -40,12 +40,15 @@ public class Panel extends HttpServlet {
                                     {titulo}
                                     <br>
                                     """;
-            String eEditar = "accion=editar&identrada="; //+
-            String eBorrar = "accion=borrar&identrada="; //+
-            String titulo = "";
+
+            String[] datos = listaEntradas.get(i).split(",");//separa la liena de string, que tiene todos los datos juntos
+            
+            String eEditar = "accion=editar&identrada=" + datos[0]; //datos[0] es la id de la entrada
+            String eBorrar = "accion=borrar&identrada="+ datos[0]; 
+
             entradas = entradas.replace("{eEditar}", eEditar);
             entradas = entradas.replace("{eBorrar}", eBorrar);
-            entradas = entradas.replace("{titulo}", listaEntradas.get(i));
+            entradas = entradas.replace("{titulo}", datos[1]);//el 1 es el titulo
         }
 
         String extra = formulario + "<br>" + entradas;
