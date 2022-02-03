@@ -1,0 +1,12 @@
+*git clone + http--
+!entrar en la carpeta!
+*cambios a lo que sea
+*git add *
+*git commit /-a para que tenga en cuenta todos los ficheros
+*git push
+
+*git rm
+
+*editor -> 
+    ctrl+o - guardar
+    ctrl+x - salir
