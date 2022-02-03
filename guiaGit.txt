@@ -1,8 +1,0 @@
-*git clone + http--
-*cambios a lo que sea
-*git add *
-*git commit
-*git push
-
-*editor -> ctrl+o - guardar
-    ctrl+x - salir

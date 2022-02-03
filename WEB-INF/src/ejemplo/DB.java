@@ -224,7 +224,7 @@ public class DB extends HttpServlet {
                     PreparedStatement pstmt = conn.prepareStatement(sqlSelect);
                     ResultSet cursor = pstmt.executeQuery(); //hay que dejarlo en blanco porque sino da "not implemented by SQLite JDBC driver"
                     while(cursor.next()) {
-                        entradas.add(cursor.getInt("id"));
+                        //entradas.add(cursor.getInt("id"));
                         entradas.add(cursor.getString("titulo"));
                         entradas.add(cursor.getString("texto"));
                         entradas.add(cursor.getString("fecha"));
