@@ -218,26 +218,18 @@ public class DB extends HttpServlet {
                 if (conn != null) {
                     
                     // Se hace una consulta                   
-                    String sqlSelect = "SELECT titulo, texto, fecha FROM entradas " +
+                    String sqlSelect = "SELECT id, titulo, texto, fecha FROM entradas " +
                         "order by fecha";
                     
                     PreparedStatement pstmt = conn.prepareStatement(sqlSelect);
                     ResultSet cursor = pstmt.executeQuery(); //hay que dejarlo en blanco porque sino da "not implemented by SQLite JDBC driver"
                     while(cursor.next()) {
-                        //entradas.add(cursor.getInt("id"));
-                        entradas.add(cursor.getString("titulo"));
-                        entradas.add(cursor.getString("texto"));
-                        entradas.add(cursor.getString("fecha"));
-                        /*
-                        respuesta.append(cursor.getString("titulo"));
-                        respuesta.append(", ");
-                        respuesta.append(cursor.getString("texto"));
-                        respuesta.append(", ");
-                        respuesta.append(cursor.getString("fecha"));
-                        respuesta.append("<br>");
+                        String unaEntrada = cursor.getInt("id") + ",";
+                        unaEntrada += cursor.getString("titulo") + ",";
+                        unaEntrada += cursor.getString("texto") + ",";
+                        unaEntrada += cursor.getString("fecha");
 
-                        entradas.put(cursor.getInt("id"), respuesta.toString());
-                        */
+                        entradas.add(unaEntrada);
                     }
 
                     // Se cierra la conexión con la base de datos

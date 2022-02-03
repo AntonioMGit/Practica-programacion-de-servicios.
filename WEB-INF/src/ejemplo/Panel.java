@@ -38,13 +38,14 @@ public class Panel extends HttpServlet {
                                     <a href='{eEditar}'> Editar<a>
                                     <a href='{eBorrar}'> Borrar<a>
                                     {titulo}
+                                    <br>
                                     """;
             String eEditar = "accion=editar&identrada="; //+
             String eBorrar = "accion=borrar&identrada="; //+
             String titulo = "";
             entradas = entradas.replace("{eEditar}", eEditar);
             entradas = entradas.replace("{eBorrar}", eBorrar);
-            entradas = entradas.replace("{titulo}", titulo);
+            entradas = entradas.replace("{titulo}", listaEntradas.get(i));
         }
 
         String extra = formulario + "<br>" + entradas;
