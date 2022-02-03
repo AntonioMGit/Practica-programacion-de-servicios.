@@ -1,4 +1,4 @@
-gi*git clone + http--
+*git clone + http--
 !entrar en la carpeta!
 *cambios a lo que sea
 *git add *
