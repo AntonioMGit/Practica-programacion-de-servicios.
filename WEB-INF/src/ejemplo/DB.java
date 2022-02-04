@@ -200,7 +200,7 @@ public class DB extends HttpServlet {
         }
     }
 
-    public ArrayList<String> buscarEntradas(){ //encriptar contrasenia?
+    public ArrayList<String> buscarEntradas(){ 
         Connection conn = null;
         ArrayList<String> entradas = new ArrayList<String>();
         //HashMap<Integer, String> entradas = new HashMap<Integer, String>();
@@ -240,6 +240,46 @@ public class DB extends HttpServlet {
             }
         }
         return entradas;
+    }
+
+    public ArrayList<String> buscarEntradaPorId(String id){
+        Connection conn = null;
+        ArrayList<String> entrada = new ArrayList<String>();
+        //HashMap<Integer, String> entradas = new HashMap<Integer, String>();
+        try {
+            // Ruta a la base de datos. El archivo "base_datos.db".
+            // Se puede indicar una ruta completa del tipo /home/usuario/... 
+            String url = "jdbc:sqlite:base_datos.db";
+            // Se crea la conexión a la base de datos:
+		    Class.forName("org.sqlite.JDBC").getDeclaredConstructor().newInstance();
+            conn = DriverManager.getConnection(url);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        } finally {
+            try {
+                if (conn != null) {
+                    
+                    // Se hace una consulta                   
+                    String sqlSelect = "SELECT id, titulo, texto, fecha FROM entradas " +
+                        "where id = " + id;
+                    
+                    PreparedStatement pstmt = conn.prepareStatement(sqlSelect);
+                    ResultSet cursor = pstmt.executeQuery(); //hay que dejarlo en blanco porque sino da "not implemented by SQLite JDBC driver"
+                    while(cursor.next()) {
+                        entrada.add(cursor.getInt("id") + "");
+                        entrada.add(cursor.getString("titulo"));
+                        entrada.add(cursor.getString("texto"));
+                        entrada.add(cursor.getString("fecha"));
+                    }
+
+                    // Se cierra la conexión con la base de datos
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                System.err.println(ex.getMessage());
+            }
+        }
+        return entrada;
     }
 
     @Override
