@@ -189,7 +189,7 @@ public class DB extends HttpServlet {
                     pstmt.setString(1, titulo);
                     pstmt.setString(2, texto);
                     pstmt.setString(3, fecha);
-                    pstmt.executeUpdate();
+                    pstmt.executeUpdate();//tiene que ser execute update
 
                     // Se cierra la conexión con la base de datos
                     conn.close();
@@ -280,6 +280,37 @@ public class DB extends HttpServlet {
             }
         }
         return entrada;
+    }
+
+    public void borrarEntrada(String id){
+        Connection conn = null;
+        try {
+            // Ruta a la base de datos. El archivo "base_datos.db".
+            // Se puede indicar una ruta completa del tipo /home/usuario/... 
+            String url = "jdbc:sqlite:base_datos.db";
+            // Se crea la conexión a la base de datos:
+		    Class.forName("org.sqlite.JDBC").getDeclaredConstructor().newInstance();
+            conn = DriverManager.getConnection(url);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        } finally {
+            try {
+                if (conn != null) {
+                    
+                    // Se hace una consulta                   
+                    String sqlSelect = "DELETE FROM entradas " +
+                        "where id like " + id;
+                    
+                    PreparedStatement pstmt = conn.prepareStatement(sqlSelect);
+                    pstmt.executeUpdate(); //tiene que ser execute update sino no borra
+                            
+                    // Se cierra la conexión con la base de datos
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                System.err.println(ex.getMessage());
+            }
+        }
     }
 
     @Override

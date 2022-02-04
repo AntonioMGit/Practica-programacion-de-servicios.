@@ -58,15 +58,6 @@ public class Editor extends HttpServlet {
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        String accion = req.getParameter("accion");
-        /*
-        if(accion.equals("borrar")){
-            
-        }else{
-
-        }
-        */
         doPost(req, resp);
     }
 }
