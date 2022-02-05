@@ -22,7 +22,7 @@ public class Editor extends HttpServlet {
         PrintWriter out = resp.getWriter();
 
         String idEntrada = req.getParameter("identrada");
-
+        //mirar que esten todos los datos puestos
         String formulario = """
             <form action='editor' method='post'>
                 Titulo: <br>
@@ -34,12 +34,17 @@ public class Editor extends HttpServlet {
             </form>
         """;
 
-        List<String> entrada = db.buscarEntradaPorId(idEntrada);
+        if(idEntrada!=null){
+            List<String> entrada = db.buscarEntradaPorId(idEntrada);
 
-        formulario = formulario.replace("{titulo}", entrada.get(1));//la 1 es la del titulo
-        formulario = formulario.replace("{texto}", entrada.get(2));//la 2 es la del texto
+            formulario = formulario.replace("{titulo}", entrada.get(1));//la 1 es la del titulo
+            formulario = formulario.replace("{texto}", entrada.get(2));//la 2 es la del texto
 
-        //fecha tambien?
+            //fecha tambien?
+        }else{
+            formulario = formulario.replace("{titulo}", "");
+            formulario = formulario.replace("{texto}", "");
+        }
 
         PlantillasHTML plantilla = new PlantillasHTML();
         String pagina = plantilla.baseHTML("Editar entrada", formulario);
@@ -50,10 +55,13 @@ public class Editor extends HttpServlet {
         String texto = req.getParameter("texto"); 
         String fecha = req.getParameter("fecha");
 
-        if(!titulo.equals("")){
-
+        if(!titulo.equals("")&&!texto.equals("")&&!fecha.equals("")){
             db.insertarEntrada(titulo, texto, fecha);
-            out.println("pasa");
+            //out.println("Insertado correctamente");
+            //redireccionar
+            resp.sendRedirect(req.getContextPath() + "/blog");
+        }else{
+            out.println("Faltan datos");
         }
     }
     @Override

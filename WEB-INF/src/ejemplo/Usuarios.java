@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 
-public class Panel extends HttpServlet {
+public class Usuarios extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -19,39 +19,37 @@ public class Panel extends HttpServlet {
         DB db = new DB();
         //poner oculta la contraseña
         String formulario = """
-            <form action='panel' method='post'>
-            Contraseña: <input type='text' name='contra1'><br/> 
-            Repetir contraseña: <input type='text' name='contra2'><br/> 
-            <input type='submit' value='Cambiar contraseña'> 
+            <form action='usuarios' method='post'>
+            Usuario: <input type='text' name='usr'><br/> 
+            Contraseña: <input type='text' name='contra'><br/> 
+            <input type='submit' value='Insertar usuario'> 
             </form>
             <br>
-            <a href='/practica/usuarios'>Gestionar usuarios<a>
+            <a href='/practica/usuarios'>Crear nuevo usuario<a>
             <br>
             <a href='/practica/editor'>Crear nueva entrada<a>
             <br>
         """;
 
         //Map<Integer, String> mapEntradas = new HashMap<Integer, String>();
-        ArrayList<String> listaEntradas = db.buscarEntradas();
+        ArrayList<String> listaUsuarios = db.buscarUsuarios();
 
         String entradas = "";
 
-        for(int i = 0; i < listaEntradas.size(); i++){
+        for(int i = 0; i < listaUsuarios.size(); i++){
             entradas = entradas +   """
                                     <a href='{eEditar}'> Editar<a>
                                     <a href='{eBorrar}'> Borrar<a>
-                                    {titulo}
+                                    {usr}
                                     <br>
                                     """;
-
-            String[] datos = listaEntradas.get(i).split(",");//separa la liena de string, que tiene todos los datos juntos
             
-            String eEditar = "/practica/editor?identrada=" + datos[0]; //datos[0] es la id de la entrada
-            String eBorrar = "/practica/borrar?identrada="+ datos[0]; //es con ?
+            //String eEditar = "/practica/editor?identrada=" + datos[0]; //datos[0] es la id de la entrada
+            String eBorrar = "/practica/borrar?idusr="+ listaUsuarios.get(i); 
 
-            entradas = entradas.replace("{eEditar}", eEditar);
-            entradas = entradas.replace("{eBorrar}", eBorrar);
-            entradas = entradas.replace("{titulo}", datos[1]);//el 1 es el titulo
+            //entradas = entradas.replace("{eEditar}", eEditar);
+            //entradas = entradas.replace("{eBorrar}", eBorrar);
+            entradas = entradas.replace("{usr}", listaUsuarios.get(i));
         }
 
         String extra = formulario + "<br>" + entradas;
@@ -61,11 +59,11 @@ public class Panel extends HttpServlet {
 
         out.println(pagina);
 
-        String pss1 = req.getParameter("contra1");
-        String pss2 = req.getParameter("contra2"); 
+        String pss1 = req.getParameter("usr");
+        String pss2 = req.getParameter("contra"); 
 
-        if(!pss1.equals("") && !pss2.equals("") && pss1.equals(pss2)){
-            db.actualizarUsuario("admin", pss1);
+        if(!pss1.equals("") && !pss2.equals("") && !listaUsuarios.contains(pss1)){
+            db.insertarUsuario(pss1, pss2);
             out.println("pasa");
         }
  

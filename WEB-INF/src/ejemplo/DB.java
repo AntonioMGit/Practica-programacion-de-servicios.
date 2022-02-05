@@ -138,6 +138,42 @@ public class DB extends HttpServlet {
         return respuesta;
     }
 
+    public ArrayList<String> buscarUsuarios(){
+        Connection conn = null;
+        ArrayList<String> respuesta = new ArrayList<String>();
+        try {
+            // Ruta a la base de datos. El archivo "base_datos.db".
+            // Se puede indicar una ruta completa del tipo /home/usuario/... 
+            String url = "jdbc:sqlite:base_datos.db";
+            // Se crea la conexión a la base de datos:
+		    Class.forName("org.sqlite.JDBC").getDeclaredConstructor().newInstance();
+            conn = DriverManager.getConnection(url);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        } finally {
+            try {
+                if (conn != null) {
+                    
+                    // Se hace una consulta
+                    String sqlSelect = "SELECT usuario, password FROM usuarios " +
+                        "WHERE not usuario = 'admin'";
+
+                    PreparedStatement pstmt = conn.prepareStatement(sqlSelect);
+                    ResultSet cursor = pstmt.executeQuery(); //hay que dejarlo en blanco porque sino da "not implemented by SQLite JDBC driver"
+                    while(cursor.next()) {
+                        respuesta.add(cursor.getString("usuario"));
+                    }
+
+                    // Se cierra la conexión con la base de datos
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                System.err.println(ex.getMessage());
+            }
+        }
+        return respuesta;
+    }
+
     public void actualizarUsuario(String usr, String contra){ 
         Connection conn = null;
         StringBuffer respuesta = new StringBuffer();
@@ -219,7 +255,7 @@ public class DB extends HttpServlet {
                     
                     // Se hace una consulta                   
                     String sqlSelect = "SELECT id, titulo, texto, fecha FROM entradas " +
-                        "order by fecha";
+                        "order by fecha desc";
                     
                     PreparedStatement pstmt = conn.prepareStatement(sqlSelect);
                     ResultSet cursor = pstmt.executeQuery(); //hay que dejarlo en blanco porque sino da "not implemented by SQLite JDBC driver"

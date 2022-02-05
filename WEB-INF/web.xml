@@ -70,4 +70,13 @@
       <servlet-name>Borrar</servlet-name>
       <url-pattern>/borrar</url-pattern>
    </servlet-mapping>
+
+   <servlet>
+     <servlet-name>Usuarios</servlet-name>      
+     <servlet-class>ejemplo.Usuarios</servlet-class>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>Usuarios</servlet-name>
+      <url-pattern>/usuarios</url-pattern>
+   </servlet-mapping>
 </web-app>

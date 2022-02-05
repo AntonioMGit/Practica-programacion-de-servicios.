@@ -8,10 +8,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.servlet.http.Cookie;
 
 public class InicioSesion extends HttpServlet {
+
+    static Cookie usuarioC = new Cookie("usuario", "");
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        usuarioC.getValue();
 
         PrintWriter out = resp.getWriter();
         String pagina = """
@@ -26,15 +32,16 @@ public class InicioSesion extends HttpServlet {
                     <br>
                     
                     <form action='iniciosesion' method='post'>
-                    Usuario: <input type='text' name='usuario'><br/> 
+                    Usuario: <input type='text' name='usuario' value={usr}><br/> 
                     Contraseña: <input type='text' name='contra'><br/>
-                    <input type='submit'> 
+                    <input type='submit' value='Loguear'> 
                     </form>
                 </body>
             </html>
         """;
         PlantillasHTML plantilla = new PlantillasHTML();
         pagina = pagina.replace("{menuLateral}",plantilla.menuLateral);
+        pagina = pagina.replace("{usr}",usuarioC.getValue());
 
         out.println(pagina);
 
@@ -45,8 +52,17 @@ public class InicioSesion extends HttpServlet {
 
         out.println(usr + " " + pss);
         out.println("<br>");
-        out.println(db.loguear(usr, pss).toString());
-        
+        String comprobar = db.loguear(usr, pss).toString();
+
+        if(comprobar!=""&&comprobar.equals(usr+" "+pss)){           
+            usuarioC = new Cookie("usuario", usr);
+            usuarioC.setMaxAge(60 * 60 * 24);
+            usuarioC.setPath("/practica");
+            resp.addCookie(usuarioC);
+            
+            //redireccionar
+            resp.sendRedirect(req.getContextPath() + "/panel");
+        }
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
