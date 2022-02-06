@@ -38,17 +38,16 @@ public class Usuarios extends HttpServlet {
 
         for(int i = 0; i < listaUsuarios.size(); i++){
             entradas = entradas +   """
-                                    <a href='{eEditar}'> Editar<a>
                                     <a href='{eBorrar}'> Borrar<a>
                                     {usr}
                                     <br>
                                     """;
             
             //String eEditar = "/practica/editor?identrada=" + datos[0]; //datos[0] es la id de la entrada
-            String eBorrar = "/practica/borrar?idusr="+ listaUsuarios.get(i); 
-
+            //String eEditar = "/practica/editor?idusr="+ listaUsuarios.get(i); 
+            String eBorrar = "/practica/borrar?tipo=usuario&idusr="+ listaUsuarios.get(i); 
             //entradas = entradas.replace("{eEditar}", eEditar);
-            //entradas = entradas.replace("{eBorrar}", eBorrar);
+            entradas = entradas.replace("{eBorrar}", eBorrar);
             entradas = entradas.replace("{usr}", listaUsuarios.get(i));
         }
 

@@ -21,6 +21,8 @@ public class Editor extends HttpServlet {
     
         PrintWriter out = resp.getWriter();
 
+        String tipo = req.getParameter("tipo");
+
         String idEntrada = req.getParameter("identrada");
         //mirar que esten todos los datos puestos
         String formulario = """
@@ -56,8 +58,11 @@ public class Editor extends HttpServlet {
         String fecha = req.getParameter("fecha");
 
         if(!titulo.equals("")&&!texto.equals("")&&!fecha.equals("")){
-            db.insertarEntrada(titulo, texto, fecha);
-            //out.println("Insertado correctamente");
+            if(idEntrada!=null){
+                db.actualizarEntrada(idEntrada, titulo, texto, fecha);
+            }else{
+                db.insertarEntrada(titulo, texto, fecha);
+            }
             //redireccionar
             resp.sendRedirect(req.getContextPath() + "/blog");
         }else{

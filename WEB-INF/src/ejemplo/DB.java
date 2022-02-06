@@ -204,6 +204,38 @@ public class DB extends HttpServlet {
         }
     }
 
+    public void borrarUsuario(String id){
+        Connection conn = null;
+        try {
+            // Ruta a la base de datos. El archivo "base_datos.db".
+            // Se puede indicar una ruta completa del tipo /home/usuario/... 
+            String url = "jdbc:sqlite:base_datos.db";
+            // Se crea la conexión a la base de datos:
+		    Class.forName("org.sqlite.JDBC").getDeclaredConstructor().newInstance();
+            conn = DriverManager.getConnection(url);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        } finally {
+            try {
+                if (conn != null) {
+                    
+                    // Se hace una consulta                   
+                    String sqlSelect = "DELETE FROM usuarios " +
+                        "WHERE usuario = ? ";
+                    
+                    PreparedStatement pstmt = conn.prepareStatement(sqlSelect);
+                    pstmt.setString(1, id);
+                    pstmt.executeUpdate(); //tiene que ser execute update sino no borra
+                            
+                    // Se cierra la conexión con la base de datos
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                System.err.println(ex.getMessage());
+            }
+        }
+    }
+
     public void insertarEntrada(String titulo, String texto, String fecha){ 
         Connection conn = null;
         StringBuffer respuesta = new StringBuffer();
@@ -225,6 +257,40 @@ public class DB extends HttpServlet {
                     pstmt.setString(1, titulo);
                     pstmt.setString(2, texto);
                     pstmt.setString(3, fecha);
+                    pstmt.executeUpdate();//tiene que ser execute update
+
+                    // Se cierra la conexión con la base de datos
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                System.err.println(ex.getMessage());
+            }
+        }
+    }
+
+    public void actualizarEntrada(String id, String titulo, String texto, String fecha){ 
+        Connection conn = null;
+        StringBuffer respuesta = new StringBuffer();
+        try {
+            // Ruta a la base de datos. El archivo "base_datos.db".
+            // Se puede indicar una ruta completa del tipo /home/usuario/... 
+            String url = "jdbc:sqlite:base_datos.db";
+            // Se crea la conexión a la base de datos:
+		    Class.forName("org.sqlite.JDBC").getDeclaredConstructor().newInstance();
+            conn = DriverManager.getConnection(url);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        } finally {
+            try {
+                if (conn != null) {
+                    // Se insertan los datos de los usuarios
+                    String sqlInsert = "UPDATE entradas SET titulo = ?, texto = ?, fecha = ? " +
+                                            "WHERE id LIKE ?";
+                    PreparedStatement pstmt = conn.prepareStatement(sqlInsert);
+                    pstmt.setString(1, titulo);
+                    pstmt.setString(2, texto);
+                    pstmt.setString(3, fecha);
+                    pstmt.setString(4, id);
                     pstmt.executeUpdate();//tiene que ser execute update
 
                     // Se cierra la conexión con la base de datos
@@ -356,67 +422,4 @@ public class DB extends HttpServlet {
         //out.println(PantillasHTML.prueba);
     
     }
-    /*
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Connection conn = null;
-        StringBuffer respuesta = new StringBuffer();
-        try {
-            // Ruta a la base de datos. El archivo "base_datos.db".
-            // Se puede indicar una ruta completa del tipo /home/usuario/... 
-            String url = "jdbc:sqlite:base_datos.db";
-            // Se crea la conexión a la base de datos:
-		    Class.forName("org.sqlite.JDBC").getDeclaredConstructor().newInstance();
-            conn = DriverManager.getConnection(url);
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        } finally {
-            try {
-                if (conn != null) {
-                    // Se crea la tabla si no existe
-                    String sql = "CREATE TABLE IF NOT EXISTS usuarios (\n"
-                        + "usuario TEXT PRIMARY KEY,\n"
-                        + "email TEXT\n"
-                        + ");";
-                    Statement stmt = conn.createStatement();
-                    stmt.execute(sql);
-
-                    // Se insertan los datos
-                    String sqlInsert = "INSERT INTO usuarios(usuario, email) VALUES(?,?)";
-                    PreparedStatement pstmt = conn.prepareStatement(sqlInsert);
-                    String usuario = req.getParameter("usuario");
-                    String email = req.getParameter("email");
-                    pstmt.setString(1, usuario);
-                    pstmt.setString(2, email);
-                    pstmt.executeUpdate();
-
-                    // Se hace una consulta
-                    String sqlSelect = "SELECT usuario, email FROM usuarios";
-                    ResultSet cursor = stmt.executeQuery(sqlSelect);
-                    while(cursor.next()) {
-                        // Se construye la respuesta que se insertará en el HTML
-                        respuesta.append(cursor.getString("usuario"));
-                        respuesta.append(" ");
-                        respuesta.append(cursor.getString("email"));
-                        respuesta.append("<br/>");
-                    }
-
-                    // Se cierra la conexión con la base de datos
-                    conn.close();
-                }
-            } catch (SQLException ex) {
-                System.err.println(ex.getMessage());
-            }
-        }
-
-        // Se escribe la página con la respuesta al usuario
-        PrintWriter out = resp.getWriter();
-        out.println("<html>");
-        out.println("<body>");
-        out.println("Usuarios:<br/>");
-        out.println(respuesta.toString());
-        out.println("</body>");
-        out.println("</html>");
-    }
-    */
 }

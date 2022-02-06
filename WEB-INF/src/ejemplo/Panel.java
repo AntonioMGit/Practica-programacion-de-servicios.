@@ -47,7 +47,7 @@ public class Panel extends HttpServlet {
             String[] datos = listaEntradas.get(i).split(",");//separa la liena de string, que tiene todos los datos juntos
             
             String eEditar = "/practica/editor?identrada=" + datos[0]; //datos[0] es la id de la entrada
-            String eBorrar = "/practica/borrar?identrada="+ datos[0]; //es con ?
+            String eBorrar = "/practica/borrar?tipo=entrada&identrada="+ datos[0]; //es con ?
 
             entradas = entradas.replace("{eEditar}", eEditar);
             entradas = entradas.replace("{eBorrar}", eBorrar);
