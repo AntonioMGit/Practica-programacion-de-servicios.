@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+//import org.stringtemplate.v4.*;
+
 
 public class PlantillasHTML extends HttpServlet {
 
@@ -32,6 +34,12 @@ public class PlantillasHTML extends HttpServlet {
                 </body>
             </html>
         """;
+        //ST paginaST = new ST(pagina);
+
+        //paginaST.add("menuLateral", menuLateral);
+        //paginaST.add("titulo", titulo);
+        //paginaST.add("extra", extra);
+
         pagina = pagina.replace("{menuLateral}", menuLateral);
         pagina = pagina.replace("{titulo}", titulo);
         pagina = pagina.replace("{extra}", extra);

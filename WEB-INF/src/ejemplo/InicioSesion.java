@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.servlet.http.HttpSession;
+
 import javax.servlet.http.Cookie;
 
 public class InicioSesion extends HttpServlet {
@@ -33,7 +35,7 @@ public class InicioSesion extends HttpServlet {
                     
                     <form action='iniciosesion' method='post'>
                     Usuario: <input type='text' name='usuario' value={usr}><br/> 
-                    Contraseña: <input type='text' name='contra'><br/>
+                    Contraseña: <input type='password' name='contra'><br/>
                     <input type='submit' value='Loguear'> 
                     </form>
                 </body>
@@ -54,7 +56,12 @@ public class InicioSesion extends HttpServlet {
         out.println("<br>");
         String comprobar = db.loguear(usr, pss).toString();
 
-        if(comprobar!=""&&comprobar.equals(usr+" "+pss)){           
+        if(comprobar!=""&&comprobar.equals(usr+" "+pss)){   
+            HttpSession sesion = req.getSession(true);
+            sesion.setAttribute("usuario", usr);
+            sesion.setMaxInactiveInterval(10 * 60); //la sesion durara 10 minutos
+
+            //?
             usuarioC = new Cookie("usuario", usr);
             usuarioC.setMaxAge(60 * 60 * 24);
             usuarioC.setPath("/practica");
@@ -66,6 +73,8 @@ public class InicioSesion extends HttpServlet {
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession sesion = req.getSession();
+        sesion.invalidate(); //se desconecta de la sesion que ya tenga
         doPost(req, resp);
     }
 }

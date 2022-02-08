@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.servlet.http.HttpSession;
+
 import javax.servlet.http.Cookie;
 
 import java.util.*;
@@ -28,6 +30,9 @@ public class Blog extends HttpServlet {
         DB db = new DB();
 
         ArrayList<String> listaEntradas = db.buscarEntradas();
+
+        HttpSession sesion = req.getSession(false);
+        //String u = (String) sesion.getAttribute("usuario");
 
         String entradas = "";
 

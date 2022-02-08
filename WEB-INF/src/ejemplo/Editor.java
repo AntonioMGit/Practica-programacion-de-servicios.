@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.servlet.http.HttpSession;
+
 import java.time.LocalDate;
 import java.util.*;
 
@@ -24,7 +26,7 @@ public class Editor extends HttpServlet {
         String tipo = req.getParameter("tipo");
 
         String idEntrada = req.getParameter("identrada");
-        //mirar que esten todos los datos puestos
+        
         String formulario = """
             <form action='editor' method='post'>
                 Titulo: <br>
