@@ -14,10 +14,11 @@ public class Instalador extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         DB db = new DB();
-
+    
         db.iniciar();
         db.insertarUsuario("admin", "admin");
 
+        //quitar
         PrintWriter out = resp.getWriter();
         out.println("<html>");
         out.println("<body>");

@@ -32,24 +32,19 @@ public class Borrar extends HttpServlet {
 
             db.borrarEntrada(idEntrada);  
 
-            String texto = "Entrada con id: " + idEntrada + " eliminada correctamente. " +
-                "<br>" +
-                "<a href='/practica/panel'>Volver al panel de control<a>";
+            String extra = plantilla.borrarHTML("entrada", idEntrada.toString());
 
-            pagina = plantilla.baseHTML("Entrada borrada", texto);
+            pagina = plantilla.baseHTML("Entrada borrada", extra);
         }
         if(tipo.equals("usuario")){
             String idUsr = req.getParameter("idusr");
 
             db.borrarUsuario(idUsr);  
 
-            String texto = "Usuario con nombre: " + idUsr + " eliminada correctamente. " +
-                "<br>" +
-                "<a href='/practica/panel'>Volver al panel de control<a>";
+            String extra = plantilla.borrarHTML("usuario", idUsr.toString());
 
-            pagina = plantilla.baseHTML("Usuario borrada", texto);
+            pagina = plantilla.baseHTML("Usuario borrada", extra);
         }
-
 
         out.println(pagina);
     }

@@ -19,9 +19,7 @@ public class InicioSesion extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        usuarioC.getValue();
-
-        PrintWriter out = resp.getWriter();
+        /*
         String pagina = """
             <html>
                 <head>
@@ -31,6 +29,8 @@ public class InicioSesion extends HttpServlet {
 
                     {menuLateral}
 
+                    <br>
+                    No la sesión no está iniciada; inicia sesión.
                     <br>
                     
                     <form action='iniciosesion' method='post'>
@@ -45,6 +45,18 @@ public class InicioSesion extends HttpServlet {
         pagina = pagina.replace("{menuLateral}",plantilla.menuLateral);
         pagina = pagina.replace("{usr}",usuarioC.getValue());
 
+        */
+
+
+        //usuarioC.getValue();
+
+        PrintWriter out = resp.getWriter();
+
+        PlantillasHTML plantilla = new PlantillasHTML();
+        String extra = plantilla.inicioSesionHTML();
+
+        String pagina = plantilla.baseHTML("Inicio sesión", extra);
+
         out.println(pagina);
 
         String usr = req.getParameter("usuario");
@@ -52,6 +64,7 @@ public class InicioSesion extends HttpServlet {
         
         DB db = new DB();
 
+        //quitar esto de comprobar
         out.println(usr + " " + pss);
         out.println("<br>");
         String comprobar = db.loguear(usr, pss).toString();

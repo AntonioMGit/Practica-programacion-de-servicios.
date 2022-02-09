@@ -26,7 +26,7 @@ public class Editor extends HttpServlet {
         String tipo = req.getParameter("tipo");
 
         String idEntrada = req.getParameter("identrada");
-        
+        /*
         String formulario = """
             <form action='editor' method='post'>
                 Titulo: <br>
@@ -49,9 +49,19 @@ public class Editor extends HttpServlet {
             formulario = formulario.replace("{titulo}", "");
             formulario = formulario.replace("{texto}", "");
         }
+        */
 
         PlantillasHTML plantilla = new PlantillasHTML();
-        String pagina = plantilla.baseHTML("Editar entrada", formulario);
+        String extra = "";
+
+        if(idEntrada!=null){
+            List<String> entrada = db.buscarEntradaPorId(idEntrada);
+            extra = plantilla.editorHTML(entrada.get(1), entrada.get(2));//1titulo 2texto
+        }else{
+            extra = plantilla.editorHTML("", "");
+        }
+        
+        String pagina = plantilla.baseHTML("Editar entrada", extra);
 
         out.println(pagina);
 
