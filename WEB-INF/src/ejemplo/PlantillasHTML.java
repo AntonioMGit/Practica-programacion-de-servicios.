@@ -113,6 +113,58 @@ public class PlantillasHTML extends HttpServlet {
         return extra;
     }
 
+    public String panelHTML(String usr, ArrayList<String> listaEntradas){
+
+        ST formularioST = new ST("""
+            <form action='panel' method='post'>
+            Contraseña: <input type='password' name='contra1'><br/> 
+            Repetir contraseña: <input type='password' name='contra2'><br/> 
+            <input type='submit' value='Cambiar contraseña'> 
+            </form>
+            <br>
+            $gestionUsuarios$
+            <a href='/practica/editor'>Crear nueva entrada<a>
+            <br>
+        """,'$','$');
+        
+        if(usr.equals("admin")){
+            String gUsuarios = """
+            <a href='/practica/usuarios'>Gestionar usuarios<a>
+            <br>
+            """;
+            formularioST.add("gestionUsuarios",gUsuarios);
+        }else{
+            formularioST.add("gestionUsuarios","");
+        }
+
+        ST entradas = null;
+        String extra = formularioST.render();
+
+        for(int i = 0; i < listaEntradas.size(); i++){
+            entradas = new ST("""
+                                <a href='$eEditar$'> Editar<a>
+                                <a href='$eBorrar$'> Borrar<a>
+                                $titulo$
+                                <br>
+                                """,'$','$');
+
+            String[] datos = listaEntradas.get(i).split(",");//separa la liena de string, que tiene todos los datos juntos
+            
+            String eEditar = "/practica/editor?identrada=" + datos[0]; //datos[0] es la id de la entrada
+            String eBorrar = "/practica/borrar?tipo=entrada&identrada="+ datos[0]; //es con ?
+
+            entradas.add("eEditar", eEditar);
+            entradas.add("eBorrar", eBorrar);
+            entradas.add("titulo", datos[1]);//el 1 es el titulo
+
+            extra = extra + entradas.render();
+        }
+
+        PlantillasHTML plantilla = new PlantillasHTML();
+        String pagina = plantilla.baseHTML("Panel de control", extra);
+        return pagina;
+    }
+
     public String editorHTML(String titulo, String texto){
         ST formularioST = new ST("""
             <form action='editor' method='post'>
@@ -130,6 +182,41 @@ public class PlantillasHTML extends HttpServlet {
         //fecha tambien?
 
         return formularioST.render();
+    }
+
+    public String usuariosHTML(ArrayList<String> listaUsuarios){
+        String formulario = """
+            <form action='usuarios' method='post'>
+            Usuario: <input type='text' name='usr'><br/> 
+            Contraseña: <input type='password' name='contra'><br/> 
+            <input type='submit' value='Insertar usuario'> 
+            </form>
+            <br>
+            <a href='/practica/usuarios'>Crear nuevo usuario<a>
+            <br>
+            <a href='/practica/editor'>Crear nueva entrada<a>
+            <br>
+        """;
+
+        ST entradas = null;
+        String extra = formulario;
+
+        for(int i = 0; i < listaUsuarios.size(); i++){
+            entradas = new ST ("""
+                                <a href='$eBorrar$'> Borrar<a>
+                                $usr$
+                                <br>
+                                """, '$', '$');
+
+            String eBorrar = "/practica/borrar?tipo=usuario&idusr="+ listaUsuarios.get(i); 
+            //entradas = entradas.replace("{eEditar}", eEditar);
+            entradas.add("eBorrar", eBorrar);
+            entradas.add("usr", listaUsuarios.get(i));
+
+            extra = extra + entradas.render();
+        }
+
+        return extra;
     }
 
     public String borrarHTML(String tipo, String id){

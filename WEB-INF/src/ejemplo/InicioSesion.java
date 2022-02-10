@@ -19,37 +19,6 @@ public class InicioSesion extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        /*
-        String pagina = """
-            <html>
-                <head>
-                    <h2>Iniciar sesion</h2>
-                </head>
-                <body>
-
-                    {menuLateral}
-
-                    <br>
-                    No la sesión no está iniciada; inicia sesión.
-                    <br>
-                    
-                    <form action='iniciosesion' method='post'>
-                    Usuario: <input type='text' name='usuario' value={usr}><br/> 
-                    Contraseña: <input type='password' name='contra'><br/>
-                    <input type='submit' value='Loguear'> 
-                    </form>
-                </body>
-            </html>
-        """;
-        PlantillasHTML plantilla = new PlantillasHTML();
-        pagina = pagina.replace("{menuLateral}",plantilla.menuLateral);
-        pagina = pagina.replace("{usr}",usuarioC.getValue());
-
-        */
-
-
-        //usuarioC.getValue();
-
         PrintWriter out = resp.getWriter();
 
         PlantillasHTML plantilla = new PlantillasHTML();

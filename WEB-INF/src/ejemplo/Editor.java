@@ -26,30 +26,6 @@ public class Editor extends HttpServlet {
         String tipo = req.getParameter("tipo");
 
         String idEntrada = req.getParameter("identrada");
-        /*
-        String formulario = """
-            <form action='editor' method='post'>
-                Titulo: <br>
-                <input type='text' name='titulo' value={titulo}><br/> 
-                Texto: <br>
-                <input type='text' name='texto' value={texto}><br/> 
-                <input type='date' name='fecha'><br/> 
-                <input type='submit' value='Guardar'> 
-            </form>
-        """;
-
-        if(idEntrada!=null){
-            List<String> entrada = db.buscarEntradaPorId(idEntrada);
-
-            formulario = formulario.replace("{titulo}", entrada.get(1));//la 1 es la del titulo
-            formulario = formulario.replace("{texto}", entrada.get(2));//la 2 es la del texto
-
-            //fecha tambien?
-        }else{
-            formulario = formulario.replace("{titulo}", "");
-            formulario = formulario.replace("{texto}", "");
-        }
-        */
 
         PlantillasHTML plantilla = new PlantillasHTML();
         String extra = "";

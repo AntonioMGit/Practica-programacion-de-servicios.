@@ -16,45 +16,13 @@ public class Usuarios extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         PrintWriter out = resp.getWriter();
-        DB db = new DB();
-        //poner oculta la contraseña
-        String formulario = """
-            <form action='usuarios' method='post'>
-            Usuario: <input type='text' name='usr'><br/> 
-            Contraseña: <input type='text' name='contra'><br/> 
-            <input type='submit' value='Insertar usuario'> 
-            </form>
-            <br>
-            <a href='/practica/usuarios'>Crear nuevo usuario<a>
-            <br>
-            <a href='/practica/editor'>Crear nueva entrada<a>
-            <br>
-        """;
 
-        //Map<Integer, String> mapEntradas = new HashMap<Integer, String>();
+        DB db = new DB();
         ArrayList<String> listaUsuarios = db.buscarUsuarios();
 
-        String entradas = "";
-
-        for(int i = 0; i < listaUsuarios.size(); i++){
-            entradas = entradas +   """
-                                    <a href='{eBorrar}'> Borrar<a>
-                                    {usr}
-                                    <br>
-                                    """;
-            
-            //String eEditar = "/practica/editor?identrada=" + datos[0]; //datos[0] es la id de la entrada
-            //String eEditar = "/practica/editor?idusr="+ listaUsuarios.get(i); 
-            String eBorrar = "/practica/borrar?tipo=usuario&idusr="+ listaUsuarios.get(i); 
-            //entradas = entradas.replace("{eEditar}", eEditar);
-            entradas = entradas.replace("{eBorrar}", eBorrar);
-            entradas = entradas.replace("{usr}", listaUsuarios.get(i));
-        }
-
-        String extra = formulario + "<br>" + entradas;
-
-        PlantillasHTML plantilla = new PlantillasHTML();
-        String pagina = plantilla.baseHTML("Panel de control", extra);
+        PlantillasHTML plantilla = new PlantillasHTML();    
+        String extra = plantilla.usuariosHTML(listaUsuarios);
+        String pagina = plantilla.baseHTML("Control usuarios", extra);
 
         out.println(pagina);
 
@@ -65,7 +33,6 @@ public class Usuarios extends HttpServlet {
             db.insertarUsuario(pss1, pss2);
             out.println("pasa");
         }
- 
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
