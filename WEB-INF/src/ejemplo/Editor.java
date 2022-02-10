@@ -32,9 +32,9 @@ public class Editor extends HttpServlet {
 
         if(idEntrada!=null){
             List<String> entrada = db.buscarEntradaPorId(idEntrada);
-            extra = plantilla.editorHTML(entrada.get(1), entrada.get(2));//1titulo 2texto
+            extra = plantilla.editorHTML(entrada.get(1), entrada.get(2), entrada.get(3));//1titulo 2texto
         }else{
-            extra = plantilla.editorHTML("", "");
+            extra = plantilla.editorHTML("", "", "");
         }
         
         String pagina = plantilla.baseHTML("Editar entrada", extra);
@@ -59,6 +59,14 @@ public class Editor extends HttpServlet {
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req, resp);
+        HttpSession sesion = req.getSession(false);
+
+        //lo pongo asi porque sino, con uno me da error cuando ya he iniciado una vez y con el otro 
+        //cuando no he iniciado. Poniendo los dos no da error en ningun caso
+        if(sesion != null && sesion.getAttribute("usuario") != null){
+            doPost(req, resp);
+        }else{
+            resp.sendRedirect(req.getContextPath() + "/iniciosesion");
+        }
     }
 }

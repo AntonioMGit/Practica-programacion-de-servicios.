@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.servlet.http.HttpSession;
+
 import java.util.*;
 
 
@@ -36,6 +38,14 @@ public class Usuarios extends HttpServlet {
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doPost(req, resp);
+        HttpSession sesion = req.getSession(false);
+
+        //lo pongo asi porque sino, con uno me da error cuando ya he iniciado una vez y con el otro 
+        //cuando no he iniciado. Poniendo los dos no da error en ningun caso
+        if(sesion != null && sesion.getAttribute("usuario") != null){
+            doPost(req, resp);
+        }else{
+            resp.sendRedirect(req.getContextPath() + "/iniciosesion");
+        }
     }
 }

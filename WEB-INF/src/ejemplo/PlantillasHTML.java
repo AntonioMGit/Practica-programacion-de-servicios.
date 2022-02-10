@@ -165,21 +165,34 @@ public class PlantillasHTML extends HttpServlet {
         return pagina;
     }
 
-    public String editorHTML(String titulo, String texto){
+    public String editorHTML(String titulo, String texto, String fecha){
         ST formularioST = new ST("""
             <form action='editor' method='post'>
                 Titulo: <br>
                 <input type='text' name='titulo' value=$titulo$><br/> 
                 Texto: <br>
                 <input type='text' name='texto' value=$texto$><br/> 
-                <input type='date' name='fecha'><br/> 
+                <input type='date' name='fecha' value=$fecha$><br/> 
                 <input type='submit' value='Guardar'> 
             </form>
         """, '$', '$');
 
+        //reemplazar ciertos caracteres
+        titulo.replaceAll("&", "&amp");
+        titulo.replaceAll(">", "&gt");
+        titulo.replaceAll("<", "&lt");
+        titulo.replaceAll("'", "&#039");
+        //titulo.replaceAll('"', "&#034");
+
+        texto.replaceAll("&", "&amp");
+        texto.replaceAll(">", "&gt");
+        texto.replaceAll("<", "&lt");
+        texto.replaceAll("'", "&#039");
+        //texto.replaceAll('"', "&#034");
+
         formularioST.add("titulo", titulo);
         formularioST.add("texto", texto);
-        //fecha tambien?
+        formularioST.add("fecha", fecha);
 
         return formularioST.render();
     }
