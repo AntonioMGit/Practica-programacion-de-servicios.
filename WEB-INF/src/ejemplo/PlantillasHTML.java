@@ -27,6 +27,7 @@ public class PlantillasHTML extends HttpServlet {
         ST paginaST = new ST("""
             <html>
                 <head>
+                    <meta charset='utf-8'>
                     <h2>$titulo$</h2>
                 </head>
                 <body>
@@ -171,8 +172,8 @@ public class PlantillasHTML extends HttpServlet {
                 Titulo: <br>
                 <input type='text' name='titulo' value=$titulo$><br/> 
                 Texto: <br>
-                <input type='text' name='texto' value=$texto$><br/> 
-                <input type='date' name='fecha' value=$fecha$><br/> 
+                <textarea name='texto'>$texto$</textarea><br/> 
+                <input type='date' name='fecha' value='$fecha$'><br/> 
                 <input type='submit' value='Guardar'> 
             </form>
         """, '$', '$');
@@ -182,13 +183,13 @@ public class PlantillasHTML extends HttpServlet {
         titulo.replaceAll(">", "&gt");
         titulo.replaceAll("<", "&lt");
         titulo.replaceAll("'", "&#039");
-        //titulo.replaceAll('"', "&#034");
+        titulo.replaceAll("\"", "&#034");
 
         texto.replaceAll("&", "&amp");
         texto.replaceAll(">", "&gt");
         texto.replaceAll("<", "&lt");
         texto.replaceAll("'", "&#039");
-        //texto.replaceAll('"', "&#034");
+        texto.replaceAll("\"", "&#034");
 
         formularioST.add("titulo", titulo);
         formularioST.add("texto", texto);

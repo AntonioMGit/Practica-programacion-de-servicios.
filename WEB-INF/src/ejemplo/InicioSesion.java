@@ -57,6 +57,8 @@ public class InicioSesion extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession sesion = req.getSession();
         sesion.invalidate(); //se desconecta de la sesion que ya tenga
+        resp.setCharacterEncoding("UTF-8");
+        
         doPost(req, resp);
     }
 }
