@@ -16,6 +16,13 @@ import java.util.*;
 
 public class Editor extends HttpServlet {
 
+    //static boolean pasa = false;
+    static String sId;
+    //quitar
+    //static String sTitulo;
+    //static String sTexto;
+    //static String sFecha;
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //
@@ -25,13 +32,22 @@ public class Editor extends HttpServlet {
 
         String tipo = req.getParameter("tipo");
 
-        String idEntrada = req.getParameter("identrada");
+        String titulo = req.getParameter("titulo");
+        String texto = req.getParameter("texto"); 
+        String fecha = req.getParameter("fecha");
+
+        String id = req.getParameter("identrada");
+
+        //se guarda la id si le pasan alguna
+        if(id!=null){
+            sId=id;
+        }
 
         PlantillasHTML plantilla = new PlantillasHTML();
         String extra = "";
 
-        if(idEntrada!=null){
-            List<String> entrada = db.buscarEntradaPorId(idEntrada);
+        if(id!=null){
+            List<String> entrada = db.buscarEntradaPorId(id);
             extra = plantilla.editorHTML(entrada.get(1), entrada.get(2), entrada.get(3));//1titulo 2texto
         }else{
             extra = plantilla.editorHTML("", "", "");
@@ -41,24 +57,29 @@ public class Editor extends HttpServlet {
 
         out.println(pagina);
 
-        String titulo = req.getParameter("titulo");
-        String texto = req.getParameter("texto"); 
-        String fecha = req.getParameter("fecha");
-
         if(!titulo.equals("")&&!texto.equals("")&&!fecha.equals("")){
-            if(idEntrada!=null){
-                db.actualizarEntrada(idEntrada, titulo, texto, fecha);
+            //si le han pasado alguna id
+            if(sId!=null){
+                db.actualizarEntrada(sId, titulo, texto, fecha);
+                pasa=false;
+                out.println("assafdsf");
+                sId=id; //vuelve a dejar la variable como si no le hubieran pasado ninguna
+                //redireccionar
+                resp.sendRedirect(req.getContextPath() + "/blog");
             }else{
                 db.insertarEntrada(titulo, texto, fecha);
+                //redireccionar
+                resp.sendRedirect(req.getContextPath() + "/blog");
             }
-            //redireccionar
-            resp.sendRedirect(req.getContextPath() + "/blog");
         }else{
             out.println("Faltan datos");
         }
+
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setCharacterEncoding("UTF-8");
+        
         HttpSession sesion = req.getSession(false);
 
         //lo pongo asi porque sino, con uno me da error cuando ya he iniciado una vez y con el otro 
