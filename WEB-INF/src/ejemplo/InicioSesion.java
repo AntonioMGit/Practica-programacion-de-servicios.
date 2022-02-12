@@ -33,12 +33,9 @@ public class InicioSesion extends HttpServlet {
         
         DB db = new DB();
 
-        //quitar esto de comprobar
-        out.println(usr + " " + pss);
-        out.println("<br>");
-        String comprobar = db.loguear(usr, pss).toString();
+        boolean comprobar = db.loguear(usr, pss);
 
-        if(comprobar!=""&&comprobar.equals(usr+" "+pss)){   
+        if(comprobar){   
             HttpSession sesion = req.getSession(true);
             sesion.setAttribute("usuario", usr);
             sesion.setMaxInactiveInterval(10 * 60); //la sesion durara 10 minutos

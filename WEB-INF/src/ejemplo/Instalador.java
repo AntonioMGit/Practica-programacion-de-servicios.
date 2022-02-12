@@ -14,7 +14,8 @@ public class Instalador extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         DB db = new DB();
-    
+
+        db.borrarUsuario("admin");//por si acaso
         db.iniciar();
         db.insertarUsuario("admin", "admin");
 

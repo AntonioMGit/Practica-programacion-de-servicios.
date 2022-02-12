@@ -18,6 +18,10 @@ import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+//m5
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class DB extends HttpServlet {
 
@@ -81,6 +85,9 @@ public class DB extends HttpServlet {
         } finally {
             try {
                 if (conn != null) {
+
+                    contra = m5Contra(contra);
+
                     // Se insertan los datos de los usuarios
                     String sqlInsert = "INSERT INTO usuarios(usuario, password) VALUES(?,?)";
                     PreparedStatement pstmt = conn.prepareStatement(sqlInsert);
@@ -97,9 +104,10 @@ public class DB extends HttpServlet {
         }
     }
 
-    public StringBuffer loguear(String usr, String contra){ //encriptar contrasenia?
+    public boolean loguear(String usr, String contra){ 
         Connection conn = null;
         StringBuffer respuesta = new StringBuffer();
+        boolean iguales = false;
         try {
             // Ruta a la base de datos. El archivo "base_datos.db".
             // Se puede indicar una ruta completa del tipo /home/usuario/... 
@@ -112,7 +120,7 @@ public class DB extends HttpServlet {
         } finally {
             try {
                 if (conn != null) {
-                    
+                    contra = m5Contra(contra);
                     // Se hace una consulta
                     String sqlSelect = "SELECT usuario, password FROM usuarios " +
                         "where usuario = ? and password = ?";
@@ -135,10 +143,16 @@ public class DB extends HttpServlet {
                 System.err.println(ex.getMessage());
             }
         }
-        return respuesta;
+        if(respuesta.toString().equals("")){
+            iguales = false;
+        }else{
+            iguales = true;
+        }
+
+        return iguales;
     }
 
-    public ArrayList<String> buscarUsuarios(){
+    public ArrayList<String> buscarUsuarios(){ //md5?
         Connection conn = null;
         ArrayList<String> respuesta = new ArrayList<String>();
         try {
@@ -189,6 +203,8 @@ public class DB extends HttpServlet {
         } finally {
             try {
                 if (conn != null) {
+                    contra = m5Contra(contra);
+
                     String sqlInsert = "UPDATE usuarios SET password = ? WHERE usuario = ?";
                     PreparedStatement pstmt = conn.prepareStatement(sqlInsert);
                     pstmt.setString(2, usr);
@@ -439,6 +455,25 @@ public class DB extends HttpServlet {
                 System.err.println(ex.getMessage());
             }
         }
+    }
+
+    //geeksforgeeks.org/md5-hash-in-java/
+    public String m5Contra(String contra){
+        String c = "";
+
+        try{
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] messageDigest = md.digest(contra.getBytes());
+            BigInteger no = new BigInteger(1,messageDigest);
+            c = no.toString(16);
+            while(c.length() < 32){
+                c = "0" + c;
+            }
+        }catch(NoSuchAlgorithmException e){
+            c="aaa";
+        }
+
+        return c;
     }
 
     @Override

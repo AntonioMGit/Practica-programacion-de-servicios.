@@ -16,12 +16,7 @@ import java.util.*;
 
 public class Editor extends HttpServlet {
 
-    //static boolean pasa = false;
     static String sId;
-    //quitar
-    //static String sTitulo;
-    //static String sTexto;
-    //static String sFecha;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
