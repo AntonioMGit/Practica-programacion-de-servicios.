@@ -178,19 +178,6 @@ public class PlantillasHTML extends HttpServlet {
             </form>
         """, '$', '$');
 
-        //reemplazar ciertos caracteres
-        titulo.replaceAll("&", "&amp");
-        titulo.replaceAll(">", "&gt");
-        titulo.replaceAll("<", "&lt");
-        titulo.replaceAll("'", "&#039");
-        titulo.replaceAll("\"", "&#034");
-
-        texto.replaceAll("&", "&amp");
-        texto.replaceAll(">", "&gt");
-        texto.replaceAll("<", "&lt");
-        texto.replaceAll("'", "&#039");
-        texto.replaceAll("\"", "&#034");
-
         formularioST.add("titulo", titulo);
         formularioST.add("texto", texto);
         formularioST.add("fecha", fecha);

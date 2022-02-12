@@ -58,15 +58,14 @@ public class Editor extends HttpServlet {
         out.println(pagina);
 
         if(!titulo.equals("")&&!texto.equals("")&&!fecha.equals("")){
-            //si le han pasado alguna id
+            //si le han pasado alguna id actualiza
             if(sId!=null){
                 db.actualizarEntrada(sId, titulo, texto, fecha);
-                pasa=false;
                 out.println("assafdsf");
                 sId=id; //vuelve a dejar la variable como si no le hubieran pasado ninguna
                 //redireccionar
                 resp.sendRedirect(req.getContextPath() + "/blog");
-            }else{
+            }else{//si no le han pasado alguna id inserta
                 db.insertarEntrada(titulo, texto, fecha);
                 //redireccionar
                 resp.sendRedirect(req.getContextPath() + "/blog");
