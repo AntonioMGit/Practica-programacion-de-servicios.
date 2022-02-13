@@ -16,7 +16,7 @@ public class PlantillasHTML extends HttpServlet {
 
     String menuLateral = """
         <div class='menuLateral'>
-            <a href='/practica/iniciosesion'>Cerrar sesion</a><br>
+            <a href='/practica/iniciosesion'>Iniciar/Cerrar sesion</a><br>
             <a href='/practica/panel'>Panel de control</a><br>
             <a href='/practica/blog'>Ir a blog</a><br>
         </div>
@@ -27,12 +27,13 @@ public class PlantillasHTML extends HttpServlet {
         ST paginaST = new ST("""
             <html>
                 <head>
-                    <h2>$titulo$</h2>
+                    <h2 style='text-align:center;color:white;background-color:SeaGreen;'>$titulo$</h2>
                 </head>
                 <body>
+                    <br>
                     <table style='width:100%'>
                         <tr style='vertical-align:top'>
-                            <th style='width:30%;'>
+                            <th style='width:25%;'>
                             </th>
                             <th style='text-align:left;'>
                                 $extra$
@@ -85,18 +86,18 @@ public class PlantillasHTML extends HttpServlet {
         for(int i = 0; i < listaEntradas.size(); i++){
             entradas = "";
             entradas = entradas +   """
-                                    <h3>$titulo$</h3>
-                                    $fecha$
-                                    <br>
+                                    <h3 style='text-align:center;color:DarkGreen;'>$titulo$</h3>
+                                    <p style='color:MediumSeaGreen;font-size:60%'>$fecha$</p>
                                     $texto$
                                     <br>
                                     """;
             if(conectado){
                 entradas = entradas +"""
-                                    <a href='$eEditar$'> Editar<a>
-                                    <br>
-                                    <a href='$eBorrar$'> Borrar<a>
-                                    <br>
+                                    <p style='font-size:75%;'>
+                                        <a href='$eEditar$'> Editar<a>
+                                        <br>
+                                        <a href='$eBorrar$'> Borrar<a>
+                                    </p>
                                     """;    
             }
             entradas= entradas + "<hr style='width:50%;margin-left:0;'>";
