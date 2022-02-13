@@ -273,12 +273,16 @@ public class DB extends HttpServlet {
                     titulo = titulo.replaceAll("<", "&lt;");
                     titulo = titulo.replaceAll("'", "&#039;");
                     titulo = titulo.replaceAll("\"", "&#034;");
+                    titulo = titulo.replaceAll(",", "&#44;");
+                    titulo = titulo.replaceAll("\n", "&lt;br&gt;");
 
                     texto = texto.replaceAll("&", "&amp;");
                     texto = texto.replaceAll(">", "&gt;");
                     texto = texto.replaceAll("<", "&lt;");
                     texto = texto.replaceAll("'", "&#039;");
                     texto = texto.replaceAll("\"", "&#034;");
+                    texto = texto.replaceAll(",", "&#44;");
+                    texto = texto.replaceAll("\n", "&lt;br&gt;");
                     
                     // Se insertan los datos de los usuarios
                     String sqlInsert = "INSERT INTO entradas(titulo, texto, fecha) VALUES(?,?,?)";
@@ -318,12 +322,16 @@ public class DB extends HttpServlet {
                     titulo = titulo.replaceAll("<", "&lt;");
                     titulo = titulo.replaceAll("'", "&#039;");
                     titulo = titulo.replaceAll("\"", "&#034;");
+                    titulo = titulo.replaceAll(",", "&#44;");
+                    titulo = titulo.replaceAll("\n", "&lt;br&gt;");
 
                     texto = texto.replaceAll("&", "&amp;");
                     texto = texto.replaceAll(">", "&gt;");
                     texto = texto.replaceAll("<", "&lt;");
                     texto = texto.replaceAll("'", "&#039;");
                     texto = texto.replaceAll("\"", "&#034;");
+                    texto = texto.replaceAll(",", "&#44;");
+                    texto = texto.replaceAll("\n", "&lt;br&gt;");
 
                     // Se insertan los datos de los usuarios
                     String sqlInsert = "UPDATE entradas SET titulo = ?, texto = ?, fecha = ? " +

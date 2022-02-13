@@ -40,7 +40,7 @@ public class Blog extends HttpServlet {
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setCharacterEncoding("UTF-8");
+        //resp.setCharacterEncoding("UTF-8");
         
         doPost(req, resp);
     }

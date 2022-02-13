@@ -20,6 +20,7 @@ public class Editor extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        
         //
         DB db = new DB();
     
@@ -72,8 +73,7 @@ public class Editor extends HttpServlet {
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setCharacterEncoding("UTF-8");
-        
+        //resp.setCharacterEncoding("UTF-8");
         HttpSession sesion = req.getSession(false);
 
         //lo pongo asi porque sino, con uno me da error cuando ya he iniciado una vez y con el otro 

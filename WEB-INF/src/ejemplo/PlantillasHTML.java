@@ -27,13 +27,21 @@ public class PlantillasHTML extends HttpServlet {
         ST paginaST = new ST("""
             <html>
                 <head>
-                    <meta charset='utf-8'>
                     <h2>$titulo$</h2>
                 </head>
                 <body>
-                    $menuLateral$
-                    <br>
-                    $extra$
+                    <table style='width:100%'>
+                        <tr style='vertical-align:top'>
+                            <th style='width:30%;'>
+                            </th>
+                            <th style='text-align:left;'>
+                                $extra$
+                            </th>
+                            <th style='width:30%;text-align:left;'>
+                                $menuLateral$
+                            </th>  
+                        </tr>                 
+                    </table>
                 </body>
             </html>
         """ , '$', '$');
@@ -54,7 +62,7 @@ public class PlantillasHTML extends HttpServlet {
         
         ST paginaST = new ST("""
                 <br>
-                No la sesión no está iniciada; inicia sesión.
+                La sesión no está iniciada; inicia sesión.
                 <br>
                 <br>            
                 <form action='iniciosesion' method='post'>
@@ -63,7 +71,6 @@ public class PlantillasHTML extends HttpServlet {
                 <input type='submit' value='Loguear'> 
                 </form>
                 """, '$', '$');
-
 
         return paginaST.render();
     }
@@ -92,6 +99,7 @@ public class PlantillasHTML extends HttpServlet {
                                     <br>
                                     """;    
             }
+            entradas= entradas + "<hr style='width:50%;margin-left:0;'>";
 
             entradasST = new ST(entradas, '$', '$');
 
@@ -125,6 +133,7 @@ public class PlantillasHTML extends HttpServlet {
             <br>
             $gestionUsuarios$
             <a href='/practica/editor'>Crear nueva entrada<a>
+            <br>
             <br>
         """,'$','$');
         
@@ -161,9 +170,9 @@ public class PlantillasHTML extends HttpServlet {
             extra = extra + entradas.render();
         }
 
-        PlantillasHTML plantilla = new PlantillasHTML();
-        String pagina = plantilla.baseHTML("Panel de control", extra);
-        return pagina;
+        //PlantillasHTML plantilla = new PlantillasHTML();
+        //String pagina = plantilla.baseHTML("Panel de control", extra);
+        return extra;
     }
 
     public String editorHTML(String titulo, String texto, String fecha){

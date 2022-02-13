@@ -19,6 +19,8 @@ public class Instalador extends HttpServlet {
         db.iniciar();
         db.insertarUsuario("admin", "admin");
 
+        //resp.setCharacterEncoding("UTF-8");
+
         //quitar
         PrintWriter out = resp.getWriter();
         out.println("<html>");
