@@ -14,7 +14,6 @@ import javax.servlet.http.Cookie;
 
 public class InicioSesion extends HttpServlet {
 
-    static Cookie usuarioC = new Cookie("usuario", "");
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -39,12 +38,6 @@ public class InicioSesion extends HttpServlet {
             HttpSession sesion = req.getSession(true);
             sesion.setAttribute("usuario", usr);
             sesion.setMaxInactiveInterval(10 * 60); //la sesion durara 10 minutos
-
-            //?
-            usuarioC = new Cookie("usuario", usr);
-            usuarioC.setMaxAge(60 * 60 * 24);
-            usuarioC.setPath("/practica");
-            resp.addCookie(usuarioC);
             
             //redireccionar
             resp.sendRedirect(req.getContextPath() + "/panel");
@@ -55,6 +48,9 @@ public class InicioSesion extends HttpServlet {
         HttpSession sesion = req.getSession();
         sesion.invalidate(); //se desconecta de la sesion que ya tenga
         //resp.setCharacterEncoding("UTF-8");
+
+        Instalador instalador = new Instalador();
+        instalador.iniciar();
         
         doPost(req, resp);
     }

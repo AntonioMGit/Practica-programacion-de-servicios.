@@ -51,11 +51,6 @@ public class PlantillasHTML extends HttpServlet {
         paginaST.add("titulo", titulo);
         paginaST.add("extra", extra);
 
-        //pagina = pagina.replace("{menuLateral}", menuLateral);
-        //pagina = pagina.replace("{titulo}", titulo);
-        //pagina = pagina.replace("{extra}", extra);
-
-        //return pagina;
         return paginaST.render();
     }
 
@@ -100,7 +95,7 @@ public class PlantillasHTML extends HttpServlet {
                                     </p>
                                     """;    
             }
-            entradas= entradas + "<hr style='width:50%;margin-left:0;'>";
+            entradas= entradas + "<hr style='width:80%;margin-left:10%;'>";
 
             entradasST = new ST(entradas, '$', '$');
 
@@ -171,8 +166,6 @@ public class PlantillasHTML extends HttpServlet {
             extra = extra + entradas.render();
         }
 
-        //PlantillasHTML plantilla = new PlantillasHTML();
-        //String pagina = plantilla.baseHTML("Panel de control", extra);
         return extra;
     }
 

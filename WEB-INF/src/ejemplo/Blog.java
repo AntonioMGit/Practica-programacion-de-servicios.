@@ -40,7 +40,14 @@ public class Blog extends HttpServlet {
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //lo quitpo porque parece que va pero cuando recarga la pagina vuelve otra vez a verse mal
+        //y me da errores al guardarlo en sqlite
+        //tambien he quitado la codificacion del html por eso
+        //sin ponerlo no me da errores y se ve todo bien
         //resp.setCharacterEncoding("UTF-8");
+
+        Instalador instalador = new Instalador();
+        instalador.iniciar();
         
         doPost(req, resp);
     }

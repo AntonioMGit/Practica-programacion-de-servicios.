@@ -11,23 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 
 
 public class Instalador extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+    public void iniciar(){
         DB db = new DB();
 
         db.borrarUsuario("admin");//por si acaso
         db.iniciar();
         db.insertarUsuario("admin", "admin");
 
-        //resp.setCharacterEncoding("UTF-8");
-
-        //quitar
-        PrintWriter out = resp.getWriter();
-        out.println("<html>");
-        out.println("<body>");
-        out.println("asdasd");
-        out.println("</body>");
-        out.println("</html>");
     }
     
 }
